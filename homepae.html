@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+		<title>sig digs</title>
+		<link rel="shortcut icon" href="pic/home.png"/ >
+
+		<link rel="stylesheet" type="text/css" href="Style.css" />
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/javascript" src="list.js"></script>
+		<script>
+		function displaySection(sectionId) {
+				var iden = ["home", "female", "male", "output"];
+					if (sectionId == "output") {
+						getResultsWomen();
+						// getResultsMen();
+					}
+					for (var i = 0; i < iden.length; i++) {
+						if (iden[i] != sectionId) {
+							$("#" + iden[i]).hide();
+						} else {
+					  $("#"+ sectionId).show();
+					}
+				}
+			}
+			function getResultsWomen() {
+				var x = document.getElementById("fem");
+				var htmlFile = "";
+				for (i = 0; i < x.length; i++) {
+					htmlFile += x.elements[i].value + ",";
+				}
+				displayOutput(htmlFile);
+				console.log(htmlFile);
+			}
+			function getResultsMen() {
+				var x = document.getElementById("mas");
+				var htmlFile = "";
+				var nothing = "";
+				for (i = 0; i < x.length; i++) {
+					htmlFile += x.elements[i].value + ",";
+				}
+				displayOutput(htmlFile);
+				console.log(htmlFile);
+			}
+
+			function displayOutput(htmlFile) {
+				
+				//document.getElementById("testFem").innerHTML = htmlFile;
+				//inputted data will be seperated into each category
+				var webfile = htmlFile.split(",");
+				console.log(webfile);
+				var textFile = localStorage.getItem("sizes");
+				//split into an array of each line//
+				
+				var splitline = textFile.split("=");
+				var n = 0;
+				var p = 0;
+				var x = 0;
+				var output = 0;
+				
+				var numericalSizes;
+				var exist = "";
+				var categories;
+				var sizeChoices;
+				while (n < 1) {
+					
+					//check for every category within a store//
+					for (var i = n+3; i <= n+5; i++) {
+						//determine the inputted data being looked at//
+						var sentIn = parseFloat(webfile[p]);
+						console.log(sentIn);
+						//seperate the each category into the different intervals//
+						categories = splitline[i].split(",");
+						//compare each size with the inputed data//
+					
+						for (var i = 1; i <= 7; i++) {
+							sizeChoices = categories[i].split(" - ");
+							console.log(sizeChoices[0]);
+							console.log(sizeChoices[1]);
+							console.log(sentIn);
+							if (sizeChoices[i] == null && i == n+5) {			
+								x += 1;
+								break;
+							} else if (sizeChoices[i] == null){
+								continue;
+							} else if ((sentIn >= parseFloat(sizeChoices[0])) && (sentIn <= parseFloat(sizeChoices[1]))) {
+								output = output + (i - 1);
+								console.log(output);
+								break;
+							}
+						}
+						p++;
+					}
+				/*	if (numericalSizes[3] =! null) {
+						exist = numbricalSizes[3];
+					}*/
+					var w = n/6;
+					var size = output / (3 - x);
+					console.log(size);
+					var displayOutput = new Array(1);
+						if (x == 3) {
+							displayOutput[w] = "n/a";
+						} else if (size <= 0.5) {
+							displayOutput[w] = "XXS";
+						} else if (size > 0.5 && size <= 1.5) {
+							displayOutput[w] = "XS";
+						} else if (size > 1.5 && size <= 2.5) {
+							displayOutput[w] = "S";
+						} else if (size > 2.5 && size <= 3.5) {
+							displayOutput[w] = "M";
+						} else if (size > 3.5 && size <= 4.5) {
+							displayOutput[w] ="L";
+						} else if (size > 5.5 && size <= 6.5) {
+							displayOutput[w] = "XL";
+						} else {
+							displayOutput[w] = "XXL";
+						}
+					
+					console.log(displayOutput);
+					n += 6;
+					addResults(displayOutput) 
+				}
+			}
+
+			function addResults(displayOutput) {
+				for (i = 0; i < displayOutput.length; i++) {
+					$('#store' + i).append(displayOutput[i]);
+				}
+				console.log("done");
+			}
+		</script>
+	</head>
+	<body>
+	<img src="pic/home.png" onclick="displaySection('home')" class="home"> 
+		<div id="home" style="display:block">
+			<h1 class="mainHead">WHAT CLOTHING ARE YOU LOOKING FOR?</h1>
+			<img class="icon" src="pic/woman.jpg" onmouseover="this.src='pic/hovwoman.jpg'"; onmouseout="this.src='pic/woman.jpg'"; onclick="displaySection('female')">
+			<img src="pic/men.jpg" class="icon" onmouseover="this.src='pic/hovmen.jpg'"; onmouseout="this.src='pic/men.jpg'"; onclick= "displaySection('male')">
+		</div>
+		<div id="female" style="display:none">
+			<p class="mainHead" >FEMALE</p>
+			<form action="/action_page.php" id="fem" class="form">
+				<span class= "label"> Bust: </span> <input class="box" type="text" name="Bust" value=""><br>
+				<br>
+				<span class= "label">  Waist: </span> <input class="box" type="text" name="Waist" value=""><br>
+				<br>
+				<span class= "label"> Hip:</span> <input class="box" type="text" name="Hip" value=""><br>
+				<br>
+				<input type="submit" onclick= "displaySection('output')" >
+			</form>
+		</div>
+		<div id="male" style="display:none">
+			<p class="mainHead">MALE</p>
+			<form action="/action_page.php" id="mas" class="form">
+				<span class= "label"> Chest: </span> <input class="box" type="text" name="Bust" value=""><br>
+				<br>
+				<span class= "label"> Waist:   </span> <input class="box" type="text" name="Waist" value=""><br>
+				<br>
+				<span class= "label"> Neck:</span> <input class="box" type="text" name="Neck" value=""><br>
+				<br>
+				<input type="submit" onclick= "displaySection('output')">
+			</form>
+		</div>
+		<div id="output" style="display:none">
+			<p id="test"> hi </p>
+			<p class="mainHead">YOUR SIZE</p>
+			<div class="x"> 
+				<span class= "store"> Aeropostale </span>
+				<span id ="store0"> </span>
+				<br>
+			</div>
+			<div class="x"> 
+				<span class= "store"> Garage </span>
+				<span id ="store1"> </span>
+				<br>
+			</div>
+			<div class="x"> 
+				<span class= "store"> Dynamite </span>
+				<span id ="store2"> </span>
+				<br>
+			</div>
+			<div class="x"> 
+				<span class= "store"> Forever 21 </span>
+				<span id ="store3"> </span>
+				<br>
+			</div>
+			<div class="x"> 
+				<span class= "store"> Hollister </span>
+				<span id ="store4"> </span>
+				<br>
+			</div>
+			<div class="x"> 
+				<span class= "store"> Abercrombie & Fitch </span>
+				<span id ="store5"> </span>
+				<br>
+			</div>
+			<div class="x"> 
+				<span class= "store"> Old Navy </span>
+				<span id ="store6"> </span>
+				<br>
+			</div>
+			<div class="x"> 
+				<span class= "store"> H&M </span>
+				<span id ="store7"> </span>
+				<br>
+			</div>
+			<div class="x"> 	
+				<span class= "store"> Bluenotes </span>
+				<span id ="store8"> </span>
+				<br>
+			</div>
+			<div class="x"> 
+				<span class= "store"> Tommy Hilfiger </span>
+				<span id ="store9"> </span>
+				<br>
+			</div>
+			<div class="x"> 
+				<span class= "store"> Nike </span>
+				<span id ="store10"> </span>
+				<br>
+			</div>
+			<div class="x"> 
+				<span class= "store"> Under Armour </span>
+				<span id ="store11"> </span>
+				<br>
+			</div>
+			<div class="x"> 
+				<span class= "store"> Adidas </span>
+				<span id ="store12"> </span>
+				<br>
+			</div>
+			<div class="x"> 
+				<span class= "store"> Zara </span>
+				<span id ="store13"> </span>
+				<br>
+			</div>
+		</div>
+	</body>
+</html>

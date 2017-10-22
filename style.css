@@ -1,0 +1,72 @@
+html, body {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+}
+body {
+	background-color: #FFFFF9;
+}
+.mainHead {
+	 text-align: center;
+	 letter-spacing: 3px;
+	 padding-top: 30px;
+	 font-family: "Lucida Console", Monospace, sans-serif;
+	 font-size: 30px;
+	 color: #8e8e8e;
+}
+.icon {
+	margin: auto;
+	margin-top: 5%;
+	margin-left: 20%;
+	width: 20%;
+
+}
+.home {
+	margin: auto;
+	margin-left: 45%;
+}
+.form{
+	margin: auto;
+	margin-left: 40%;
+
+}
+.box {
+	margin: auto;
+	margin-top: -30%;
+	margin-left:11%;
+	height: 50px;
+	display: table-cell;
+}
+.button {
+	margin: auto;
+	margin-left: 10%;
+	border: none;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+}
+.label {
+	text-align: center;
+	margin-left: -10%
+	margin-top: 30%;
+	letter-spacing: 2px;
+	font-family: "Verdana", Monospace, sans-serif;
+	font-size: 20px;
+	display: table-cell;
+}
+.home {
+	width: 100px;
+}
+.store {
+	text-align: center;
+	letter-spacing: 2px;
+	font-family: "Verdana", Monospace, sans-serif;
+	font-size: 25px;
+}
+.x {
+	margin-left: 30%;
+	margin-top: 20px;
+}
